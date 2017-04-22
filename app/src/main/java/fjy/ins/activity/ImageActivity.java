@@ -11,6 +11,7 @@ import com.bumptech.glide.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
 import fjy.ins.*;
+import java.io.*;
 
 import android.support.v7.widget.Toolbar;
 
@@ -57,7 +58,18 @@ public class ImageActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				Snackbar.make(toolbar, "action_阿里PayPal", 0).show();
+				
+				switch(saveImage(bm)){
+					case 0:
+						Snackbar.make(toolbar, "Success!", 0).show();
+						break;
+					case 1:
+						Snackbar.make(toolbar, "File not found!", 0).show();
+						break;
+					case 2:
+						Snackbar.make(toolbar, "IO Expecption trigered", 0).show();
+						break;
+				}
             }
         });
         
@@ -90,5 +102,25 @@ public class ImageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 	
-    
+    public static int saveImage(Bitmap bmp) {
+		File appDir = new File(Environment.getExternalStorageDirectory(), "InstaSave");
+		if (!appDir.exists()) {
+			appDir.mkdir();
+		}
+		String fileName = System.currentTimeMillis() + ".png";
+		File file = new File(appDir, fileName);
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.flush();
+			fos.close();
+			return 0;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return 1;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return 2;
+		}
+	}
 }
