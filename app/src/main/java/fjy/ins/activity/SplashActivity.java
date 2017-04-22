@@ -27,7 +27,6 @@ public class SplashActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		setContentView(R.layout.activity_splash);
 		
 		BlurKit.init(this);
@@ -40,7 +39,7 @@ public class SplashActivity extends Activity
 						
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
+			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
 																						
 		if(needPm()){
@@ -103,12 +102,4 @@ public class SplashActivity extends Activity
 			}
 		,377);		
 	}
-	
-	/*public void init(){
-		SharedPreferences sp = getSharedPreferences("info",MODE_PRIVATE);
-		if(sp.getInt("times",0) == 0){
-			SharedPreferences.Editor et = sp.edit();
-			et.putInt("times",1);
-		}
-	}*/
 }

@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity
 					finish();*/
                     final EditText et = new EditText(MainActivity.this);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("(๑•̀ㅁ•́๑)✧");
-                    builder.setMessage("\n自Android6.0，由于新增权限API\n\n若要正常使用随记，请接受以下权限申请\n");
+                    builder.setTitle("(๑•̀ㅁ•́๑)✧输入网址");
+                    builder.setMessage("\n\n");
                     builder.setView(et);
-                    builder.setNegativeButton("明白", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 new NetTask().execute(String.valueOf(et.getText()));
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 				}
 			});
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			getWindow().setStatusBarColor(Color.parseColor("#10000000"));
 			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
 		}
 		setSupportActionBar(tb);
@@ -167,9 +167,9 @@ public class MainActivity extends AppCompatActivity
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             MyAdapter.ViewHolder viewHolder = (MyAdapter.ViewHolder) view.getTag();
-            String noteId = viewHolder.tvId.getText().toString().trim();
-            Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-            intent.putExtra("id", Integer.parseInt(noteId));
+            String content = viewHolder.tvContent.getText().toString().trim();
+            Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+            intent.putExtra("path", content);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed()
 	{
-		Snackbar.make(fab, "想要写的都写完了吗？？", 0).setAction("写完了", new OnClickListener(){
+		Snackbar.make(fab, "点击右方按钮以退出", 0).setAction("退出", new OnClickListener(){
 				@Override
 				public void onClick(View v){
 					finish();
