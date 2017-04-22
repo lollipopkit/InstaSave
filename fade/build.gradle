@@ -1,0 +1,53 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'fadingtextview'
+
+    publishedGroupId = 'com.tomer'
+    libraryName = 'fadingtextview'
+    artifact = 'fadingtextview'
+
+    libraryDescription = 'A textview that changes its content automatically every few seconds Edit'
+
+    siteUrl = 'https://github.com/rosenpin/FadingTextView'
+    gitUrl = 'https://github.com/rosenpin/FadingTextView.git'
+
+    libraryVersion = '1.8'
+
+    developerId = 'rosenpin'
+    developerName = 'Tomer Rosenfeld'
+    developerEmail = 'tomerosenfeld007@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 25
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    testCompile 'junit:junit:4.12'
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
