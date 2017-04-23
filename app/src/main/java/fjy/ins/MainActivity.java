@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
     }
 
+    private void update(){
+        dm.readFromDB(noteDataList);
+    }
 	private void updateView() {
         if (noteDataList.isEmpty()) {
 			//Sna("欢迎使用(・∀・)！！！！！！\n请阅读第一条，以获悉使用方法");
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             MyAdapter.ViewHolder viewHolder = (MyAdapter.ViewHolder) view.getTag();
-            String content = viewHolder.tvContent.getText().toString().trim();
+            String content = viewHolder.tvTitle.getText().toString().trim();
             Intent intent = new Intent(MainActivity.this, ImageActivity.class);
             intent.putExtra("path", content);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -290,6 +293,7 @@ public class MainActivity extends AppCompatActivity
         {
             pd.dismiss();
             startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result));
+            finish();
         }
     }
 }

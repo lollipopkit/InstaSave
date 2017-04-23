@@ -17,6 +17,9 @@ import java.io.*;
 
 import android.support.v7.widget.Toolbar;
 import android.app.*;
+import fjy.ins.model.*;
+import java.text.*;
+import java.util.*;
 
 public class ImageActivity extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class ImageActivity extends AppCompatActivity {
     private ProgressDialog pd;
     private String url;
     private String path;
+    private String size;
+    private DBManager db;
 
     public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -60,6 +65,8 @@ public class ImageActivity extends AppCompatActivity {
         iv = $(R.id.im_view);
         setSupportActionBar(toolbar);
         
+        db = new DBManager(this);
+        
         url = getIntent().getExtras().getString("url", null);
         path = getIntent().getExtras().getString("path", null);
         if(url != null){
@@ -70,6 +77,7 @@ public class ImageActivity extends AppCompatActivity {
 
                         switch(saveImage(bm)){
                             case 0:
+                                db.addToDB(PHOTO_NAME, url, getTime(), "$^@&#^#&#", size);
                                 Snackbar.make(toolbar, "成功下载！已保存至图库", 0).show();
                                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File("/sdcard/InstaSave/" + PHOTO_NAME))));
                                 break;
@@ -92,12 +100,24 @@ public class ImageActivity extends AppCompatActivity {
             //pd.setCancelable(false);
             pd.show();
         }else if(path != null){
-            Glide.with(this).load(new File(Environment.getExternalStorageDirectory() + path + ".png")).crossFade().into(iv);
+            File f = new File(Environment.getExternalStorageDirectory() + "/InstaSave/" + path);
+            if(f.exists()){
+                Glide.with(this).load(f).into(iv);
+            }else{
+                Snackbar.make(toolbar, "图片不存在\n可能您已经删除了它ʕ•ٹ•ʔ", 0).show();
+            }
         }
         
 		if(Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT){
 			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
 		}
+    }
+    
+    private String getTime() {
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm E");
+        Date curDate = new Date();
+        String str = format.format(curDate);
+        return str;
     }
     
     public int saveImage(Bitmap bmp) {
@@ -113,6 +133,7 @@ public class ImageActivity extends AppCompatActivity {
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.flush();
                 fos.close();
+                size = String.valueOf(file.length()/1024) + "kb";
                 return 0;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -125,4 +146,10 @@ public class ImageActivity extends AppCompatActivity {
             return 4;
         }
 	}
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(ImageActivity.this, MainActivity.class));
+    }
 }
