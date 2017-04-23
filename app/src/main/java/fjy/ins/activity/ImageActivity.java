@@ -33,6 +33,7 @@ public class ImageActivity extends AppCompatActivity {
     private String path;
     private String size;
     private DBManager db;
+	private File f;
 
     public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -63,6 +64,7 @@ public class ImageActivity extends AppCompatActivity {
         toolbar = $(R.id.toolbar_scroll);
         toolbar.setTitleTextColor(Color.WHITE);   
         iv = $(R.id.im_view);
+		fab = $(R.id.fab_about);
         setSupportActionBar(toolbar);
         
         db = new DBManager(this);
@@ -70,7 +72,6 @@ public class ImageActivity extends AppCompatActivity {
         url = getIntent().getExtras().getString("url", null);
         path = getIntent().getExtras().getString("path", null);
         if(url != null){
-            fab = $(R.id.fab_about);
             fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -100,8 +101,23 @@ public class ImageActivity extends AppCompatActivity {
             //pd.setCancelable(false);
             pd.show();
         }else if(path != null){
-            File f = new File(Environment.getExternalStorageDirectory() + "/InstaSave/" + path);
+            f = new File(Environment.getExternalStorageDirectory() + "/InstaSave/" + path);
             if(f.exists()){
+				fab.setImageDrawable(getDrawable(R.drawable.ic_share));
+				fab.setOnClickListener(new View.OnClickListener(){
+						@Override
+						public void onClick(View v){
+							if (f != null && f.exists() && f.isFile()) {
+								Intent intent = new Intent(Intent.ACTION_SEND);
+								intent.setType("image/jpg");
+								Uri u = Uri.fromFile(f);
+								intent.putExtra(Intent.EXTRA_STREAM, u);
+								intent.putExtra(Intent.EXTRA_TEXT, "我从InstaSave下载了Instagram上喜欢的照片");
+								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								startActivity(Intent.createChooser(intent, "InstaSave"));
+							}
+						}
+				});
                 Glide.with(this).load(f).into(iv);
             }else{
                 Snackbar.make(toolbar, "图片不存在\n可能您已经删除了它ʕ•ٹ•ʔ", 0).show();
@@ -112,8 +128,8 @@ public class ImageActivity extends AppCompatActivity {
 			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
 		}
     }
-    
-    private String getTime() {
+	
+	private String getTime() {
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm E");
         Date curDate = new Date();
         String str = format.format(curDate);
