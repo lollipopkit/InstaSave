@@ -167,5 +167,6 @@ public class ImageActivity extends AppCompatActivity {
     public void onBackPressed()
     {
         startActivity(new Intent(ImageActivity.this, MainActivity.class));
+		finish();
     }
 }

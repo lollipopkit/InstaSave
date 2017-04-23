@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity
 		switch (item.getItemId()) {
             case R.id.action_about:
                 startActivity(new Intent(MainActivity.this,ScrollingActivity.class));
+				finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
