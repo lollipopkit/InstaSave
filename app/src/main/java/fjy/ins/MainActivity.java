@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity
 					finish();*/
                     final EditText et = new EditText(MainActivity.this);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("(๑•̀ㅁ•́๑)✧输入网址");
-                    builder.setMessage("\n\n");
+                    builder.setTitle("(๑•̀ㅁ•́๑)✧网址");
                     builder.setView(et);
                     builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
