@@ -3,13 +3,13 @@
 	<string name="title"></string>
 	<string name="about"></string>
 	<string name="action_share"></string>
-	<string name="intro">应用简介</string>
+	<string name="intro">简介</string>
 	<string name="now">现在</string>
     <string name="pd_title">请稍候…</string>
     <string name="pd_msg">正在解析网页</string>
     <string name="pd_pro">，已完成</string>
     <string name="pd_lp">正在加载图片</string>
-	<string name="empty">还未发现历史记录呢\n\n点击右下方按钮即可保存INS图片\n长按历史记录可删除\n\n右上角可清空历史记录\nヽ(^o^)丿</string>
+	<string name="empty">ʕ•ٹ•ʔ\n\n还未发现历史记录\n\n点击右下方按钮，复制帖子链接并粘贴\n长按历史记录可删除</string>
 	
 	<string-array name="about_intro_array">
         <item>\n\n\n\n\n\n这是一款“极简笔记”应用\n\n简介如下\n\n\n\n全局Material Design，符合美学\n\n\n\n\n\n\n@CoolApk LolliKit\n@Github LollipopKit</item>

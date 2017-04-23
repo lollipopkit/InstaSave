@@ -71,10 +71,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					/*Intent i = new Intent(MainActivity.this, EditNoteActivity.class);
-					//i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(i);
-					finish();*/
                     final EditText et = new EditText(MainActivity.this);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("(๑•̀ㅁ•́๑)✧网址");
@@ -100,12 +96,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
     }
 
-    private void update(){
-        dm.readFromDB(noteDataList);
-    }
 	private void updateView() {
         if (noteDataList.isEmpty()) {
-			//Sna("欢迎使用(・∀・)！！！！！！\n请阅读第一条，以获悉使用方法");
 			dm.addToDB(getString(R.string.intro),getString(R.string.empty),getString(R.string.now), "#00000000", "天涯海角");
 			dm.readFromDB(noteDataList);
         } 
@@ -130,7 +122,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -139,27 +130,8 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
             case R.id.action_about:
-                Intent i = new Intent(MainActivity.this,ScrollingActivity.class);
-				//i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-				//finish();
+                startActivity(new Intent(MainActivity.this,ScrollingActivity.class));
                 break;
-            /*case R.id.action_clean:
-                new MaterialDialog.Builder(MainActivity.this)
-					.content(R.string.are_you_sure)
-					.positiveText(R.string.clean)
-					.negativeText(R.string.cancel)
-					.callback(new MaterialDialog.ButtonCallback() {
-						@Override
-						public void onPositive(MaterialDialog dialog) {
-							for (int id = 0; id < 100; id++)
-								DBManager.getInstance(MainActivity.this).deleteNote(id);
-							adapter.removeAllItem();
-							updateView();
-							Sna("刚刚删除了什么秘密呢？");
-						}
-					}).show();
-                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -172,13 +144,11 @@ public class MainActivity extends AppCompatActivity
             String content = viewHolder.tvTitle.getText().toString().trim();
             Intent intent = new Intent(MainActivity.this, ImageActivity.class);
             intent.putExtra("path", content);
-            //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }
     }
-
-    //listView长按事件
+    
     private class NoteLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(final AdapterView<?> adapterView, View view, final int i, long l) {
@@ -189,13 +159,12 @@ public class MainActivity extends AppCompatActivity
             final int id = note.getId();
 			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 			builder.setTitle("(๑•̀ㅁ•́๑)✧");
-			builder.setMessage("\n自Android6.0，由于新增权限API\n\n若要正常使用随记，请接受以下权限申请\n");
+			builder.setMessage("\n确认删除此条记录？\n");
 			builder.setNegativeButton("明白", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						DBManager.getInstance(MainActivity.this).deleteNote(id);
 						adapter.removeItem(i);
-						//updateView();
 					}
 				});		
 			builder.create().show();
@@ -208,24 +177,6 @@ public class MainActivity extends AppCompatActivity
 	{
 		finish();
 		super.onNewIntent(intent);
-	}*/
-
-	/*private void controlService(int i){
-		switch(i){
-			case 0:
-				startService(new Intent(this, LocationService.class));
-				break;
-			case 1:
-				stopService(new Intent(this, LocationService.class));
-				break;
-		}
-	}*/
-	
-	/*@Override
-	protected void onDestroy()
-	{
-		stopService(new Intent(this, LocationService.class));
-		super.onDestroy();
 	}*/
 
 	@Override

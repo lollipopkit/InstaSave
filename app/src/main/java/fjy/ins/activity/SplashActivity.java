@@ -41,6 +41,8 @@ public class SplashActivity extends Activity
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
+        
+        ign();
 																						
 		if(needPm()){
 			Notice();
@@ -102,4 +104,19 @@ public class SplashActivity extends Activity
 			}
 		,377);		
 	}
+    
+    public void ign(){
+        try
+        {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+            int code = sign.hashCode();
+            if(code != -1996844014 && code != -253306175){
+                finish();
+            }
+        }
+        catch (PackageManager.NameNotFoundException e){
+        }
+    }
 }
