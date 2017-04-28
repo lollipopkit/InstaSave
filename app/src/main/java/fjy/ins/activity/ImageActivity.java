@@ -1,7 +1,9 @@
 package fjy.ins.activity;
 
+import android.app.*;
 import android.content.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 import android.net.*;
 import android.os.*;
 import android.support.design.widget.*;
@@ -12,14 +14,15 @@ import android.widget.*;
 import com.bumptech.glide.*;
 import com.bumptech.glide.request.animation.*;
 import com.bumptech.glide.request.target.*;
+import com.flurgle.blurkit.*;
 import fjy.ins.*;
-import java.io.*;
-
-import android.support.v7.widget.Toolbar;
-import android.app.*;
 import fjy.ins.model.*;
+import java.io.*;
 import java.text.*;
 import java.util.*;
+
+import android.support.v7.widget.Toolbar;
+import fjy.ins.R;
 
 public class ImageActivity extends AppCompatActivity {
 
@@ -32,6 +35,7 @@ public class ImageActivity extends AppCompatActivity {
     private String url;
     private String path;
     private String size;
+    private String title;
     private DBManager db;
 	private File f;
 
@@ -66,11 +70,14 @@ public class ImageActivity extends AppCompatActivity {
         iv = $(R.id.im_view);
 		fab = $(R.id.fab_about);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         db = new DBManager(this);
+        Bundle b = getIntent().getExtras();
+        url = b.getString("url", null);
+        path = b.getString("path", null);
+        title = b.getString("title", null);
         
-        url = getIntent().getExtras().getString("url", null);
-        path = getIntent().getExtras().getString("path", null);
         if(url != null){
             fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -100,6 +107,7 @@ public class ImageActivity extends AppCompatActivity {
             pd.setMessage("图片加载中！\n建议使用VPN（host较慢）");
             //pd.setCancelable(false);
             pd.show();
+            Toast.makeText(this, title, 0).show();
         }else if(path != null){
             f = new File(Environment.getExternalStorageDirectory() + "/InstaSave/" + path);
             if(f.exists()){
@@ -125,8 +133,15 @@ public class ImageActivity extends AppCompatActivity {
         }
         
 		if(Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT){
-			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
+			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
+        
+        getWindow().setBackgroundDrawable(new BitmapDrawable(
+                                              BlurKit.getInstance()
+                                              .blur(((BitmapDrawable)
+                                                    WallpaperManager.getInstance(this)
+                                                    .getDrawable())
+                                                    .getBitmap(), 16)));
     }
 	
 	private String getTime() {

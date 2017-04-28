@@ -7,10 +7,12 @@
 </RelativeLayout>-->
 <android.support.v7.widget.CardView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:card_view="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/card"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+    app:cardBackgroundColor="#08000000"
 	card_view:cardCornerRadius="6dp"
 	card_view:cardElevation="5dp"
 	card_view:cardUseCompatPadding="true"
@@ -28,7 +30,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_alignParentTop="true"
 			android:layout_marginBottom="8dp"
-			android:textColor="#ff000000"
+			android:textColor="#ffffff"
 			android:textSize="20sp"
 			android:textStyle="bold" />
 
@@ -38,7 +40,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/note_title"
 			android:layout_marginBottom="8dp"
-			android:textColor="#ff000000" />
+			android:textColor="#ffffff" />
 
 		<TextView
 			android:id="@+id/note_time"
@@ -47,7 +49,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentRight="true"
 			android:layout_below="@+id/note_content"
-			android:textColor="#ff2a0f5c"
+			android:textColor="#ffffff"
 			android:textSize="12sp" />
 
 		<TextView
@@ -57,7 +59,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentLeft="true"
 			android:layout_below="@+id/note_content"
-			android:textColor="#ff2a0f5c"
+			android:textColor="#ffffff"
 			android:textSize="12sp" />
 
 		<TextView
@@ -65,24 +67,18 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:visibility="gone" />
+        
+        
 
 	</RelativeLayout>
+    
+    <!--<RelativeLayout
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content">
+        
+        
+        
+    </RelativeLayout>-->
 
 </android.support.v7.widget.CardView>
-<!--
-<cn.yan.library.SlideLayout
-	
-	android:id="@+id/note_slide"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content">
-
-	
-
-	<TextView
-		android:gravity="center"
-		android:id="@+id/tv_slide"
-		android:layout_height="wrap_content"
-		android:layout_width="66dp"
-		android:text="删除"/>
-
-</cn.yan.library.SlideLayout>-->

@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#8E9CFF</color>
     <color name="colorPrimaryDark">#8594FF</color>
+    <color name="colorTrans">#10000000</color>
     <color name="colorAccent">#8E9CFF</color>
     <color name="colorIconLight">#616161</color>
     <color name="colorIconDark">#E0E0E0</color>

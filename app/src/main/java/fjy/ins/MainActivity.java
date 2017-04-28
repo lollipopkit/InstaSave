@@ -1,7 +1,9 @@
 package fjy.ins;
 
+import android.app.*;
 import android.content.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
 import android.os.*;
 import android.support.design.widget.*;
 import android.support.v4.widget.*;
@@ -10,7 +12,7 @@ import android.support.v7.widget.*;
 import android.view.*;
 import android.view.View.*;
 import android.widget.*;
-import fjy.ins.*;
+import com.flurgle.blurkit.*;
 import fjy.ins.activity.*;
 import fjy.ins.adapter.*;
 import fjy.ins.model.*;
@@ -21,9 +23,8 @@ import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.*;
 
-import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AlertDialog;
-import android.app.*;
+import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
 	private DrawerLayout drawer;
     private NavigationView nv;
 	private Toolbar tb;
+    private String title;
 
 	public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -78,15 +80,20 @@ public class MainActivity extends AppCompatActivity
                     builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                new NetTask().execute(String.valueOf(et.getText()));
+                                String str = String.valueOf(et.getText());
+                                if(str != null | !str.equals("")){
+                                    new NetTask().execute(str);
+                                }else{
+                                    Sna("This element must not be null!");
+                                }
                             }
                         });     
                     builder.create().show();
 				}
 			});
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
-			getWindow().setStatusBarColor(Color.parseColor("#10000000"));
-			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
+			getWindow().setStatusBarColor(Color.TRANSPARENT);
+			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
 		setSupportActionBar(tb);
 		setupDrawerContent(nv);
@@ -94,6 +101,13 @@ public class MainActivity extends AppCompatActivity
 			this, drawer, tb, R.string.about, R.string.about);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        
+        getWindow().setBackgroundDrawable(new BitmapDrawable(
+                                              BlurKit.getInstance()
+                                              .blur(((BitmapDrawable)
+                                                    WallpaperManager.getInstance(this)
+                                                    .getDrawable())
+                                                    .getBitmap(), 16)));
     }
 
 	private void updateView() {
@@ -226,6 +240,8 @@ public class MainActivity extends AppCompatActivity
                         publishProgress((int) (((count / (float) total) * 100) - 1));
 
                     }
+                    
+                    title = Praser.RegexString(new String(baos.toByteArray(), "utf-8"), "(?<=title[>]).*([\\s\\S]*)*(?=[<][/]title[>])");
                     return Praser.RegexString(new String(baos.toByteArray(), "utf-8"), "(?<=\"og.image\" content[=]\").*(?=\")");
                 }
             } catch (Exception e) {
@@ -244,7 +260,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(String result) 
         {
             pd.dismiss();
-            startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result));
+            startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result).putExtra("title", title));
             finish();
         }
     }
