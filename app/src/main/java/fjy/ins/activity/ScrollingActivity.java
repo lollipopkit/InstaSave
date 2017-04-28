@@ -47,7 +47,7 @@ public class ScrollingActivity extends AppCompatActivity {
             }
         });
 		if(Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT){
-			getWindow().setNavigationBarColor(Color.parseColor("#8594FF"));
+			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
         
         getWindow().setBackgroundDrawable(new BitmapDrawable(
