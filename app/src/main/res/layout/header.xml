@@ -13,7 +13,7 @@ android:theme="@style/ThemeOverlay.AppCompat.Dark">
 	android:layout_height="wrap_content"
 	android:layout_alignParentBottom="true"
 	android:layout_marginBottom="16dp"
-	android:text="Be yourself"/>
+	android:text="Have you dl which you love?"/>
 
 <TextView
 	android:id="@+id/id_username"

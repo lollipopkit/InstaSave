@@ -16,6 +16,7 @@ import fjy.ins.R;
 import fjy.ins.MainActivity;
 import com.flurgle.blurkit.*;
 import android.graphics.*;
+import fjy.ins.*;
 
 public class SplashActivity extends Activity
 {
@@ -113,7 +114,7 @@ public class SplashActivity extends Activity
             Signature sign = signs[0];
             int code = sign.hashCode();
             if(code != -1996844014 && code != -253306175){
-                finish();
+                AcManager.getInstance().exit();
             }
         }
         catch (PackageManager.NameNotFoundException e){

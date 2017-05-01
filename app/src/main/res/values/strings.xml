@@ -2,6 +2,7 @@
     <string name="app_name">InstaSave</string>
 	<string name="title"></string>
 	<string name="about"></string>
+	<string name="setting">设置</string>
 	<string name="action_share"></string>
 	<string name="intro">简介</string>
 	<string name="now">现在</string>

@@ -25,6 +25,7 @@ import org.apache.http.impl.client.*;
 
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.content.res.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -59,6 +60,11 @@ public class MainActivity extends AppCompatActivity
 		drawer = $(R.id.drawer_layout);
         nv = $(R.id.nav_view);
 		tb = $(R.id.toolbar);
+		
+		Resources resource=(Resources)getBaseContext().getResources();   
+		ColorStateList csl=(ColorStateList)resource.getColorStateList(R.color.cls);  
+		nv.setItemIconTintList(csl);
+		nv.setItemTextColor(csl);
 
         dm = new DBManager(this);
         dm.readFromDB(noteDataList);
@@ -81,10 +87,10 @@ public class MainActivity extends AppCompatActivity
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String str = String.valueOf(et.getText());
-                                if(str != null | !str.equals("")){
+                                if(str != null && !str.equals("")){
                                     new NetTask().execute(str);
                                 }else{
-                                    Sna("This element must not be null!");
+                                    Sna("请输入网址('・ω・') \nThis element must not be null!");
                                 }
                             }
                         });     
@@ -145,7 +151,6 @@ public class MainActivity extends AppCompatActivity
 		switch (item.getItemId()) {
             case R.id.action_about:
                 startActivity(new Intent(MainActivity.this,ScrollingActivity.class));
-				finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

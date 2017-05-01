@@ -70,7 +70,6 @@ public class ImageActivity extends AppCompatActivity {
         iv = $(R.id.im_view);
 		fab = $(R.id.fab_about);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         db = new DBManager(this);
         Bundle b = getIntent().getExtras();

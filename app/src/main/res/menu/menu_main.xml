@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="fjy.memo2.MainActivity">
+    tools:context="fjy.ins.MainActivity">
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
 		android:icon="@drawable/ic_about"
-        android:title="@string/about"
+        android:title="@string/setting"
 		
         app:showAsAction="ifRoom" />
     <!--<item android:id="@+id/action_color"-->

@@ -76,11 +76,11 @@ public class ScrollingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 	
-	@Override
+	/*@Override
 	public void onBackPressed(){
 		Intent i = new Intent(ScrollingActivity.this, MainActivity.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(i);
 		finish();
-	}
+	}*/
 }
