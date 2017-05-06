@@ -12,6 +12,7 @@
 		android:gravity="center"
 		android:id="@+id/tv_scroll"
 		android:layout_width="match_parent"
+        android:textColor="#ffffcc"
 		android:layout_height="wrap_content"
 		app:texts="@array/about_intro_array" 
 		app:timeout="1500">

@@ -6,6 +6,7 @@
 	<string name="action_share"></string>
 	<string name="intro">简介</string>
 	<string name="now">现在</string>
+    <string name="qc_start">快速开始</string>
     <string name="pd_title">请稍候…</string>
     <string name="pd_msg">正在解析网页</string>
     <string name="pd_pro">，已完成</string>
@@ -13,9 +14,8 @@
 	<string name="empty">ʕ•ٹ•ʔ\n\n还未发现历史记录\n\n点击右下方按钮，复制帖子链接并粘贴\n长按历史记录可删除</string>
 	
 	<string-array name="about_intro_array">
-        <item>\n\n\n\n\n\n这是一款“极简笔记”应用\n\n简介如下\n\n\n\n全局Material Design，符合美学\n\n\n\n\n\n\n@CoolApk LolliKit\n@Github LollipopKit</item>
-		<item>\n\n\n\n\n\n使用简单，操作方便\n\n云备忘录，随时随地访问\n\n适配Android7.1：Shortcut，更加快捷\n\n\n\n\n\n@QQ 2647350848\n\n\n\n@Instagram lollipopkit.lolli</item>
-		<item>\n\n\n\n\n\n一键添加位置信息、日期，方便\n\n\n\n@Github LollipopKit</item>
-		<item>\n\n\n\n\n\n觉得本应用不错的话，可以点击右上方“邮箱按钮”来投食哦\n\n\n感谢您的使用！\n\n\n\n注：不会未经许可保存任何用户资料\n\n\n\n@CoolApk LolliKit</item>
+        <item>\n\n\n\n\n\n一款Instagram图片下载应用\n\n简介如下\n\n\n\n全局Material Design，符合美学\n\n\n\n\n\n\n@CoolApk LolliKit\n@Github LollipopKit</item>
+		<item>\n\n\n\n\n\n使用简单，操作方便\n\n浏览记录，不误新欢与旧爱\n\n增加Shortcut，更加快捷\n\n\n\n\n\n@QQ 2647350848\n\n\n\n@Instagram lollipopkit.lolli</item>
+		<item>\n\n\n\n\n\n觉得本应用不错的话，可以点击右上方“邮箱按钮”来投食哦\n\n\n感谢您的使用！\n\n\n\n\n\n\n\n@CoolApk LolliKit</item>
     </string-array>
 </resources>

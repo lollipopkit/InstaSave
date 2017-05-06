@@ -15,6 +15,9 @@
 		
 		<activity android:name=".activity.SplashActivity"
 			      android:theme="@style/AppTheme.NoActionBar">
+			      <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcut"/>
 			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,6 +27,9 @@
 		<activity android:name=".activity.ScrollingActivity"/>
 		<activity android:name=".activity.EditNoteActivity" />
         <activity android:name=".activity.ImageActivity" />
+        <activity android:name=".activity.QuickActivity" 
+            android:theme="@style/AppTheme.Transparent">
+        </activity>
     </application>
 
 </manifest>

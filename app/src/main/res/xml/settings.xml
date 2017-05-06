@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<PreferenceScreen   
+    xmlns:android="http://schemas.android.com/apk/res/android"   
+    android:title="设置">  
+    
+	<PreferenceCategory
+		android:title="@string/about">
+		
+		<Preference
+			android:key="pref_clean"
+			android:title="清空记录"
+			android:summary="清空所有记录防止隐私泄露"/>
+		
+	</PreferenceCategory>
+    
+</PreferenceScreen>  

@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity
 	private DrawerLayout drawer;
     private NavigationView nv;
 	private Toolbar tb;
-    private String title;
 
 	public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity
 			});
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
-			getWindow().setNavigationBarColor(Color.TRANSPARENT);
+			getWindow().setNavigationBarColor(Color.parseColor("#10000000"));
 		}
 		setSupportActionBar(tb);
 		setupDrawerContent(nv);
@@ -108,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         
+        BlurKit.init(this);
         getWindow().setBackgroundDrawable(new BitmapDrawable(
                                               BlurKit.getInstance()
                                               .blur(((BitmapDrawable)
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, ImageActivity.class);
             intent.putExtra("path", content);
             startActivity(intent);
-            finish();
         }
     }
     
@@ -246,7 +245,6 @@ public class MainActivity extends AppCompatActivity
 
                     }
                     
-                    title = Praser.RegexString(new String(baos.toByteArray(), "utf-8"), "(?<=title[>]).*([\\s\\S]*)*(?=[<][/]title[>])");
                     return Praser.RegexString(new String(baos.toByteArray(), "utf-8"), "(?<=\"og.image\" content[=]\").*(?=\")");
                 }
             } catch (Exception e) {
@@ -265,7 +263,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(String result) 
         {
             pd.dismiss();
-            startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result).putExtra("title", title));
+            startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result));
             finish();
         }
     }

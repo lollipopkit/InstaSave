@@ -35,7 +35,7 @@ public class ImageActivity extends AppCompatActivity {
     private String url;
     private String path;
     private String size;
-    private String title;
+    private boolean directback;
     private DBManager db;
 	private File f;
 
@@ -75,7 +75,7 @@ public class ImageActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         url = b.getString("url", null);
         path = b.getString("path", null);
-        title = b.getString("title", null);
+        
         
         if(url != null){
             fab.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +86,7 @@ public class ImageActivity extends AppCompatActivity {
                             case 0:
                                 db.addToDB(PHOTO_NAME, url, getTime(), "$^@&#^#&#", size);
                                 Snackbar.make(toolbar, "成功下载！已保存至图库", 0).show();
+                                directback = false;
                                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File("/sdcard/InstaSave/" + PHOTO_NAME))));
                                 break;
                             case 1:
@@ -106,7 +107,7 @@ public class ImageActivity extends AppCompatActivity {
             pd.setMessage("图片加载中！\n建议使用VPN（host较慢）");
             //pd.setCancelable(false);
             pd.show();
-            Toast.makeText(this, title, 0).show();
+            
         }else if(path != null){
             f = new File(Environment.getExternalStorageDirectory() + "/InstaSave/" + path);
             if(f.exists()){
@@ -135,6 +136,7 @@ public class ImageActivity extends AppCompatActivity {
 			getWindow().setNavigationBarColor(Color.TRANSPARENT);
 		}
         
+        BlurKit.init(this);
         getWindow().setBackgroundDrawable(new BitmapDrawable(
                                               BlurKit.getInstance()
                                               .blur(((BitmapDrawable)
@@ -180,7 +182,12 @@ public class ImageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        startActivity(new Intent(ImageActivity.this, MainActivity.class));
-		finish();
+        if(directback = false){
+            startActivity(new Intent(ImageActivity.this, MainActivity.class));
+            finish();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 }
