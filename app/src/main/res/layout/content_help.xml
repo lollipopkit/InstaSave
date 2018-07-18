@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="fjy.ins.activity.ScrollingActivity"
-    tools:showIn="@layout/activity_scrolling">
+    tools:context="fjy.ins.activity.HelpActivity"
+    tools:showIn="@layout/activity_help">
 	
 	<com.tomer.fadingtextview.FadingTextView
 		android:gravity="center"
-		android:id="@+id/tv_scroll"
+		android:id="@+id/tv_help"
 		android:layout_width="match_parent"
         android:textColor="#ffffff"
 		android:layout_height="wrap_content"
-		app:texts="@array/about_intro_array" 
+		app:texts="@array/help_array" 
 		app:timeout="1500">
 			
 	</com.tomer.fadingtextview.FadingTextView>

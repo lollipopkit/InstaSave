@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 	private DrawerLayout drawer;
     private NavigationView nv;
 	private Toolbar tb;
+	private long firstTime = 0;
 
 	public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 		init();
-		AcManager.getInstance().addActivity(this);
     }
 	
 	private void init(){
@@ -65,12 +65,10 @@ public class MainActivity extends AppCompatActivity
 		nv.setItemIconTintList(csl);
 		nv.setItemTextColor(csl);
 
-        dm = new DBManager(this);
-        dm.readFromDB(noteDataList);
+        dm = new DBManager(this); 
+		dm.readFromDB(noteDataList);
 		updateView();
 
-        adapter = new MyAdapter(this, noteDataList);
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new NoteClickListener());
         listView.setOnItemLongClickListener(new NoteLongClickListener());
 
@@ -79,17 +77,26 @@ public class MainActivity extends AppCompatActivity
 				@Override
 				public void onClick(View view) {
                     final EditText et = new EditText(MainActivity.this);
+					et.setHint("  请输入复制好的链接");
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("(๑•̀ㅁ•́๑)✧网址");
+                    builder.setTitle("(๑•̀ㅁ•́๑)✧\n");
                     builder.setView(et);
-                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                    builder.setNeutralButton("使用说明", new  DialogInterface.OnClickListener(){
+						    @Override
+							public void onClick(DialogInterface dia,int which){
+								startActivity(new Intent(MainActivity.this, HelpActivity.class));
+							}
+					    })
+					       .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String str = String.valueOf(et.getText());
-                                if(str != null && !str.equals("")){
-                                    new NetTask().execute(str);
-                                }else{
-                                    Sna("请输入网址('・ω・') \nThis element must not be null!");
+								if(str.contains("instagram")){
+									new NetTask().execute(str);
+								}else if(str != null && !str.equals("")){
+									Sna("\n不要滥竽充数(･ิω･ิ)\n\n请输入Instagram链接哦 ʕ•̀ω•́ʔ✧");
+								}else{
+                                    Sna("请输入链接('・ω・') \nThis element must not be null!");
                                 }
                             }
                         });     
@@ -120,7 +127,12 @@ public class MainActivity extends AppCompatActivity
         if (noteDataList.isEmpty()) {
 			dm.addToDB(getString(R.string.intro),getString(R.string.empty),getString(R.string.now), "#00000000", "天涯海角");
 			dm.readFromDB(noteDataList);
-        } 
+        } else{
+			noteDataList.clear();
+			dm.readFromDB(noteDataList);
+			adapter = new MyAdapter(this, noteDataList);
+			listView.setAdapter(adapter);
+		}
     }
 	
 	private void setupDrawerContent(NavigationView navigationView)
@@ -156,15 +168,26 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+	@Override
+	protected void onResume()
+	{
+		updateView();
+		super.onResume();
+	}
+
 	private class NoteClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             MyAdapter.ViewHolder viewHolder = (MyAdapter.ViewHolder) view.getTag();
             String content = viewHolder.tvTitle.getText().toString().trim();
-            Intent intent = new Intent(MainActivity.this, ImageActivity.class);
-            intent.putExtra("path", content);
-            startActivity(intent);
+            if(content.equals("简介")){
+				Sna("这只是个简介( ﾟдﾟ)\n点不进去的，不用试了(・へ・)");
+			}else{
+				Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+				intent.putExtra("path", content);
+				startActivity(intent);
+			}
         }
     }
     
@@ -191,23 +214,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-	/*@Override
-	protected void onNewIntent(Intent intent)
-	{
-		finish();
-		super.onNewIntent(intent);
-	}*/
-
 	@Override
 	public void onBackPressed()
 	{
-		Snackbar.make(fab, "点击右方按钮以退出", 0).setAction("退出", new OnClickListener(){
-				@Override
-				public void onClick(View v){
-					finish();
-					//controlService(1);
-				}
-			}).show();
+		long secondTime = System.currentTimeMillis();
+		if (secondTime - firstTime > 2000) {
+			firstTime = secondTime;
+			Sna("再次点击来确定是否离开我(｡>﹏<｡)");
+		} else {
+			finish();
+		}
 	}
     
     private class NetTask extends AsyncTask<String, Integer, String> 
@@ -264,7 +280,6 @@ public class MainActivity extends AppCompatActivity
         {
             pd.dismiss();
             startActivity(new Intent(MainActivity.this , ImageActivity.class).putExtra("url", result));
-            finish();
         }
     }
 }

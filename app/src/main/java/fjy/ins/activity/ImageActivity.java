@@ -52,7 +52,6 @@ public class ImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewing);
         init();
-		AcManager.getInstance().addActivity(this);
     }
     
     private SimpleTarget target = new SimpleTarget<Bitmap>() {  
@@ -178,16 +177,4 @@ public class ImageActivity extends AppCompatActivity {
             return 4;
         }
 	}
-
-    @Override
-    public void onBackPressed()
-    {
-        if(directback = false){
-            startActivity(new Intent(ImageActivity.this, MainActivity.class));
-            finish();
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
 }

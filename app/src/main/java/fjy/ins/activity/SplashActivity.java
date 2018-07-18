@@ -4,23 +4,22 @@ import android.*;
 import android.app.*;
 import android.content.*;
 import android.content.pm.*;
+import android.graphics.*;
 import android.graphics.drawable.*;
-import android.media.*;
 import android.os.*;
 import android.support.v7.app.*;
-import android.util.*;
 import android.view.*;
+import android.widget.*;
+import com.flurgle.blurkit.*;
+import fjy.ins.*;
 
 import android.support.v7.app.AlertDialog;
 import fjy.ins.R;
-import fjy.ins.MainActivity;
-import com.flurgle.blurkit.*;
-import android.graphics.*;
-import fjy.ins.*;
 
 public class SplashActivity extends Activity
 {
 	private Handler handler = new Handler();
+	ImageView iv;
 	
 	String[] PER_ALL = {"android.permission.WRITE_EXTERNAL_STORAGE"};
 
@@ -114,7 +113,8 @@ public class SplashActivity extends Activity
             Signature sign = signs[0];
             int code = sign.hashCode();
             if(code != -1996844014 && code != -253306175){
-                AcManager.getInstance().exit();
+				Toast.makeText(this,"请不要尝试修改签名！\n此操作会引起程序闪退！",0).show();
+                iv.setClickable(false);
             }
         }
         catch (PackageManager.NameNotFoundException e){

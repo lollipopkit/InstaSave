@@ -18,4 +18,9 @@
 		<item>\n\n\n\n\n\n使用简单，操作方便\n\n浏览记录，不误新欢与旧爱\n\n增加Shortcut，更加快捷\n\n\n\n\n\n@QQ 2647350848\n\n\n\n@Instagram lollipopkit.lolli</item>
 		<item>\n\n\n\n\n\n觉得本应用不错的话，可以点击右上方“邮箱按钮”来投食哦\n\n\n感谢您的使用！\n\n\n\n\n\n\n\n@CoolApk LolliKit</item>
     </string-array>
+   	<string-array name="help_array">
+		<item>\n\n\n\n首先在Instagram中\n\n找到想要下载的图片的页面</item>
+		<item>\n\n\n\n点击图片右上角的三个小点\n\n再点击“复制链接”</item>
+		<item>\n\n\n\n最后返回本程序\n\n将链接粘贴于输入框，并点击“确定”</item>
+	</string-array>
 </resources>

@@ -9,12 +9,11 @@ import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
-import com.flurgle.blurkit.*;
+
+import com.flurgle.blurkit.BlurKit;
 import fjy.ins.*;
 
-import fjy.ins.R;
-
-public class ScrollingActivity extends AppCompatActivity {
+public class HelpActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 	private FloatingActionButton fab;
@@ -30,7 +29,7 @@ public class ScrollingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_help);
         init();
     }
 
@@ -75,11 +74,5 @@ public class ScrollingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 	
-	/*@Override
-	public void onBackPressed(){
-		Intent i = new Intent(ScrollingActivity.this, MainActivity.class);
-		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
-		finish();
-	}*/
+	
 }
