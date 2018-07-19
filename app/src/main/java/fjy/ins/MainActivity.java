@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity
 				@Override
 				public void onClick(View view) {
                     final EditText et = new EditText(MainActivity.this);
-					et.setHint("  请输入复制好的链接");
+					et.setPadding(10,20,10,20);
+					et.setHint("请输入复制好的链接");
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setTitle("(๑•̀ㅁ•́๑)✧\n");
                     builder.setView(et);

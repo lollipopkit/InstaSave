@@ -35,7 +35,6 @@ public class ImageActivity extends AppCompatActivity {
     private String url;
     private String path;
     private String size;
-    private boolean directback;
     private DBManager db;
 	private File f;
 
@@ -85,7 +84,6 @@ public class ImageActivity extends AppCompatActivity {
                             case 0:
                                 db.addToDB(PHOTO_NAME, url, getTime(), "$^@&#^#&#", size);
                                 Snackbar.make(toolbar, "成功下载！已保存至图库", 0).show();
-                                directback = false;
                                 sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File("/sdcard/InstaSave/" + PHOTO_NAME))));
                                 break;
                             case 1:
