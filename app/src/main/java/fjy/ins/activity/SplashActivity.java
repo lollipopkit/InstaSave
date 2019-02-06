@@ -15,6 +15,9 @@ import fjy.ins.*;
 
 import android.support.v7.app.AlertDialog;
 import fjy.ins.R;
+import fjy.ins.App;
+import com.tencent.bugly.crashreport.*;
+import com.tencent.bugly.crashreport.CrashReport.UserStrategy;
 
 public class SplashActivity extends Activity
 {
@@ -29,13 +32,20 @@ public class SplashActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		
+		Context appContext = getApplicationContext();
+		String packageName = appContext.getPackageName();
+		String processName = App.getProcessName(android.os.Process.myPid());
+		UserStrategy strategy = new UserStrategy(appContext);
+		strategy.setUploadProcess(processName == null || processName.equals(packageName));
+		CrashReport.initCrashReport(getApplicationContext(), strategy);
+		
 		BlurKit.init(this);
 		getWindow().setBackgroundDrawable(new BitmapDrawable(
 		BlurKit.getInstance()
 				.blur(((BitmapDrawable)
 		WallpaperManager.getInstance(this)
 				        .getDrawable())
-				        .getBitmap(), 20)));
+				        .getBitmap(), 6)));
 						
 		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT){
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -98,8 +108,14 @@ public class SplashActivity extends Activity
 	private void LoadAc(){
 		handler.postDelayed(new Runnable(){
 				public void run(){
-					startActivity(new Intent(SplashActivity.this,MainActivity.class));
-					finish();
+					startActivity(new Intent(SplashActivity.this,MainActivity.class), ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
+					new Handler().postDelayed(new Runnable(){
+							@Override
+							public void run()
+							{
+								finish();
+							}
+						}, 1000);
 				}
 			}
 		,377);		
@@ -112,12 +128,18 @@ public class SplashActivity extends Activity
             Signature[] signs = packageInfo.signatures;
             Signature sign = signs[0];
             int code = sign.hashCode();
-            if(code != -1996844014 && code != -253306175){
+            if(code != Getter.ign1 && code != Getter.ign2){
 				Toast.makeText(this,"请不要尝试修改签名！\n此操作会引起程序闪退！",0).show();
-                iv.setClickable(false);
+				iv.setClickable(false);
             }
         }
         catch (PackageManager.NameNotFoundException e){
         }
     }
+
+	@Override
+	public void onBackPressed()
+	{
+		
+	}
 }

@@ -5,6 +5,10 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.READ_LOGS" />
 	
     <application
         android:allowBackup="true"
@@ -12,6 +16,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+		
+		<meta-data
+            android:name="BUGLY_APPID"
+            android:value="0e74b77eb3" />
+		<!-- 配置APP版本号 -->
+		<meta-data
+            android:name="BUGLY_APP_VERSION"
+            android:value="1.0" />
+		<!-- 配置APP渠道号 -->
+		<meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="Myself" />
+		<!-- 配置Bugly调试模式（true或者false）-->
+		<meta-data
+            android:name="BUGLY_ENABLE_DEBUG"
+            android:value="false" />
 		
 		<activity android:name=".activity.SplashActivity"
 			      android:theme="@style/AppTheme.NoActionBar">
@@ -23,10 +43,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 		</activity>
-        <activity android:name=".MainActivity"/>
-		<activity android:name=".activity.ScrollingActivity"/>
-		<activity android:name=".activity.EditNoteActivity" />
+        <activity android:name=".MainActivity"
+			      android:launchMode="singleTask" />
+		<activity android:name=".activity.ScrollingActivity" />
+		<activity android:name=".activity.SettingsActivity" />
+		<activity android:name=".activity.FetchActivity" />
         <activity android:name=".activity.ImageActivity" />
+		<activity android:name=".activity.VideoActivity" />
 		<activity android:name=".activity.HelpActivity" />
         <activity android:name=".activity.QuickActivity" 
             android:theme="@style/AppTheme.Transparent">

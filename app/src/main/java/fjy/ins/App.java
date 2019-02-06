@@ -1,9 +1,20 @@
 package fjy.ins;
 
-import android.app.Application;
-import android.content.Context;
-import android.graphics.Bitmap;
-import java.nio.ByteBuffer; 
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
+import android.os.*;
+import android.support.design.widget.*;
+import android.text.*;
+import android.view.*;
+import android.widget.*;
+import com.bumptech.glide.*;
+import com.bumptech.glide.load.resource.bitmap.*;
+import fjy.ins.activity.*;
+import fjy.ins.model.*;
+import java.io.*;
+import java.nio.*;
+import java.util.*;
 
 public class App extends Application 
 { 
@@ -11,8 +22,93 @@ public class App extends Application
 	
     @Override
 	public void onCreate() { 
-	    context = getApplicationContext(); 
+	    context = getApplicationContext();
 	} 
+	
+	public static void glideWithBg(List<Note> noteDataList, ImageView iv,Activity act){
+		File test;
+		for(int i = noteDataList.size() - 1;i >= 0;i--){
+			test = new File("/sdcard/InstaSave/" + noteDataList.get(i).getPath());
+			if(test.exists()){
+				Glide.with(act)
+					.load(test)
+					.crossFade(600)
+					.transform(new CenterCrop(act), new GlideRoundTransform(act, 12))
+					.skipMemoryCache(true)
+					.into(iv);
+				break;
+			}
+		}
+	}
+	
+	public static void Sna(View v, String sna){
+		Snackbar.make(v, sna, 0).show();
+	}
+	
+	public static void helpSna(View v, String str, final Activity ac){
+		Snackbar.make(v, str, Snackbar.LENGTH_SHORT)
+			.setAction("帮助", new View.OnClickListener(){
+				@Override
+				public void onClick(View v1){
+					HelpActivity.intentHelp(ac);
+				}
+			}).show();
+	}
+	
+	public static String extractDrawable(Context context, int id) 
+	{
+        String imagePath = "/sdcard/InstaSave/BG.jpg";
+        File file = new File(imagePath);
+
+        try {
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+			Bitmap pic = BitmapFactory.decodeResource(context.getResources(), id);
+			FileOutputStream fos = new FileOutputStream(file);
+			pic.compress(Bitmap.CompressFormat.PNG, 100, fos);
+			fos.flush();
+			fos.close();
+
+        } catch(Throwable t) {
+            t.printStackTrace();
+            imagePath = null;
+        }
+		return imagePath;
+    }
+	
+	public static boolean isPhotoDownloaded(List<Note> noteDataList, String image){
+		for(int test = noteDataList.size() - 1; test > 0; test--){
+			if(noteDataList.get(test).getUrl().equals(image)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static String getProcessName(int pid) {
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+			String processName = reader.readLine();
+			if (!TextUtils.isEmpty(processName)) {
+				processName = processName.trim();
+			}
+			return processName;
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+		} finally {
+			try {
+				if (reader != null) {
+					reader.close();
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
+		return null;
+	}
 	
 	public static Context getContext(){ 
 	    return context;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="fjy.ins.activity.ScrollingActivity">
+    tools:context=".activity.FetchActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -22,15 +22,24 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 			
-			<com.tomer.fadingtextview.FadingTextView
-				android:id="@+id/ftv_view"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:gravity="center" />
+			<me.qinc.lib.edgetranslucent.EdgeTransparentView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:fitsSystemWindows="true"
+				app:edge_width="15dp"
+				app:edge_position="left|right">
+
+				<ImageView
+					android:id="@+id/iv_fetch_bg"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:focusable="true"
+					android:fitsSystemWindows="true" />
+
+			</me.qinc.lib.edgetranslucent.EdgeTransparentView>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_scroll"
+                android:id="@+id/toolbar_fetch"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -39,15 +48,15 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_viewing" />
+    <include layout="@layout/content_fetch" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_about"
+        android:id="@+id/fab_fetch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_action_save" />
+        app:srcCompat="@drawable/ic_add" />
 
 </android.support.design.widget.CoordinatorLayout>

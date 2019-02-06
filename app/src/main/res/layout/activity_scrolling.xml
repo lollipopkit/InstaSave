@@ -21,6 +21,21 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+			
+			<me.qinc.lib.edgetranslucent.EdgeTransparentView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:fitsSystemWindows="true"
+				app:edge_width="15dp"
+				app:edge_position="left|right">
+
+				<ImageView
+					android:id="@+id/iv_about_bg"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:fitsSystemWindows="true" />
+
+			</me.qinc.lib.edgetranslucent.EdgeTransparentView>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_scroll"
@@ -31,6 +46,29 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+	
+	<com.github.glomadrian.grav.GravView
+		android:fitsSystemWindows="true"
+        android:id="@+id/grav"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        app:colorGenerator="com.github.glomadrian.grav.generator.paint.ArrayColorGenerator"
+        app:array_colors="@array/Spectral"
+        app:pointGenerator="com.github.glomadrian.grav.generator.point.RegularPointGenerator"
+        app:regular_cell_size="100"
+        app:regular_variance="50"
+        app:gravGenerator="com.github.glomadrian.grav.generator.grav.BallGenerator"
+        app:ball_size="3dp"
+        app:animationGenerators="@array/BallWaveAnimations"
+        app:side_to_side_min_duration="2000"
+        app:side_to_side_max_duration="5000"
+        app:side_to_side_direction="upToDown"
+        app:shake_variance="50dp"
+        app:ball_size_from_size="3dp"
+        app:ball_size_to_size="6dp"
+        app:shake_direction="horizontal"
+	/>
 
     <include layout="@layout/content_scrolling" />
 

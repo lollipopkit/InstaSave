@@ -8,7 +8,7 @@
         android:shortcutShortLabel="@string/qc_start">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="fjy.ins.activity.QuickActivity"
+            android:targetClass="fjy.ins.activity.FetchActivity"
             android:targetPackage="fjy.ins" />
     </shortcut>
 </shortcuts>

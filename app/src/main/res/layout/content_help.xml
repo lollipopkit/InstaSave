@@ -15,7 +15,7 @@
         android:textColor="#ffffff"
 		android:layout_height="wrap_content"
 		app:texts="@array/help_array" 
-		app:timeout="1500">
+		app:timeout="2500">
 			
 	</com.tomer.fadingtextview.FadingTextView>
 

@@ -36,14 +36,15 @@ public class DBManager {
     }
 
     // 添加到数据库
-    public void addToDB(String title, String content, String time, String color, String location) {
+    public void addToDB(String title, String content, String time, String path, String size, String url) {
         //  组装数据
         ContentValues cv = new ContentValues();
         cv.put(NoteDBOpenHelper.TITLE, title);
         cv.put(NoteDBOpenHelper.CONTENT, content);
         cv.put(NoteDBOpenHelper.TIME, time);
-		cv.put(NoteDBOpenHelper.COLOR, color);
-		cv.put(NoteDBOpenHelper.LOC, location);
+		cv.put(NoteDBOpenHelper.PATH, path);
+		cv.put(NoteDBOpenHelper.SIZE, size);
+		cv.put(NoteDBOpenHelper.URL, url);
         dbWriter.insert(NoteDBOpenHelper.TABLE_NAME, null, cv);
     }
 
@@ -57,8 +58,9 @@ public class DBManager {
                 note.setTitle(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.TITLE)));
                 note.setContent(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.CONTENT)));
                 note.setTime(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.TIME)));
-				note.setColor(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.COLOR)));
-				note.setLoc(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.LOC)));
+				note.setPath(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.PATH)));
+				note.setSize(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.SIZE)));
+				note.setUrl(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.URL)));
                 noteList.add(note);
             }
         } catch (Exception e) {
@@ -68,15 +70,16 @@ public class DBManager {
     }
 
     //  更新数据
-    public void updateNote(int noteID, String title, String content, String time, String color, 
-	String location1) {
+    public void updateNote(int noteID, String title, String content, String time, String path, 
+	String size, String url) {
         ContentValues cv = new ContentValues();
         cv.put(NoteDBOpenHelper.ID, noteID);
         cv.put(NoteDBOpenHelper.TITLE, title);
         cv.put(NoteDBOpenHelper.CONTENT, content);
         cv.put(NoteDBOpenHelper.TIME, time);
-		cv.put(NoteDBOpenHelper.COLOR, color);
-		cv.put(NoteDBOpenHelper.LOC, location1);
+		cv.put(NoteDBOpenHelper.PATH, path);
+		cv.put(NoteDBOpenHelper.SIZE, size);
+		cv.put(NoteDBOpenHelper.URL, url);
         dbWriter.update(NoteDBOpenHelper.TABLE_NAME, cv, "_id = ?", new String[]{noteID + ""});
     }
 
@@ -93,8 +96,9 @@ public class DBManager {
         note.setId(cursor.getInt(cursor.getColumnIndex(NoteDBOpenHelper.ID)));
         note.setTitle(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.TITLE)));
         note.setContent(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.CONTENT)));
-		note.setColor(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.COLOR)));
-		note.setLoc(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.LOC)));
+		note.setPath(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.PATH)));
+		note.setSize(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.SIZE)));
+		note.setUrl(cursor.getString(cursor.getColumnIndex(NoteDBOpenHelper.URL)));
         return note;
     }
 }

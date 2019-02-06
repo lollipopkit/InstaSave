@@ -8,16 +8,23 @@ import android.os.*;
 import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
+import android.transition.*;
 import android.view.*;
+import android.widget.*;
 import com.flurgle.blurkit.*;
+import com.tomer.fadingtextview.*;
 import fjy.ins.*;
+import fjy.ins.model.*;
+import java.util.*;
 
+import android.support.v7.widget.Toolbar;
 import fjy.ins.R;
 
 public class ScrollingActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 	private FloatingActionButton fab;
+	private FadingTextView ftv;
 
     public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -35,14 +42,28 @@ public class ScrollingActivity extends AppCompatActivity {
     }
 
     private void init(){
+		ftv = $(R.id.tv_scroll);
         toolbar = $(R.id.toolbar_scroll);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+		DBManager dm = new DBManager(this); 
+		final List<Note> noteDataList = new ArrayList<>();
+		dm.readFromDB(noteDataList);
+		final ImageView iv= $(R.id.iv_about_bg);
+		new Handler().postDelayed(new Runnable(){
+				@Override
+				public void run()
+				{
+					App.glideWithBg(noteDataList, iv, ScrollingActivity.this);
+				}
+			}, 1200);
 		fab = $(R.id.fab_about);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				Snackbar.make(toolbar, "action_阿里PayPal", 0).show();
+				ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+				cm.setText("lollipopkit");
+				Snackbar.make(toolbar, "支付宝用户名已复制，感谢您的捐赠", 0).show();
             }
         });
 		if(Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT){
@@ -54,7 +75,8 @@ public class ScrollingActivity extends AppCompatActivity {
                                               .blur(((BitmapDrawable)
                                                     WallpaperManager.getInstance(this)
                                                     .getDrawable())
-                                                    .getBitmap(), 16)));
+                                                    .getBitmap(), 6)));
+		getWindow().setEnterTransition(new Explode().setDuration(500));
     }
     
     @Override
@@ -75,11 +97,21 @@ public class ScrollingActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 	
-	/*@Override
+	@Override
 	public void onBackPressed(){
-		Intent i = new Intent(ScrollingActivity.this, MainActivity.class);
-		i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(i);
-		finish();
-	}*/
+		ftv.setVisibility(8);
+		ftv.clearAnimation();
+		ftv.stop();
+		new Handler().postDelayed(new Runnable(){
+				@Override
+				public void run()
+				{
+					superBack();
+				}
+			}, 100);
+	}
+	
+	private void superBack(){
+		super.onBackPressed();
+	}
 }

@@ -5,19 +5,20 @@ public class Note {
     private String title;
     private String content;
     private String time;
-	private String loc;
-	private String color;
+	private String size;
+	private String path;
+	private String url;
 
     public int getId() {
         return id;
     }
 	
-	public String getLoc(){
-		return loc;
+	public String getSize(){
+		return size;
 	}
 	
-	public void setLoc(String location){
-		this.loc = location;
+	public void setSize(String si){
+		this.size = si;
 	}
 
     public void setId(int id) {
@@ -48,11 +49,19 @@ public class Note {
         this.time = time;
     }
 	
-	public void setColor(String color){
-		this.color = color;
+	public void setPath(String path){
+		this.path = path;
 	}
 	
-	public String getColor(){
-		return color;
+	public String getPath(){
+		return path;
+	}
+	
+	public void setUrl(String url){
+		this.url = url;
+	}
+	
+	public String getUrl(){
+		return url;
 	}
 }

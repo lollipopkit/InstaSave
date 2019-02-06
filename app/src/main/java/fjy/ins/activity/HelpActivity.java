@@ -9,9 +9,15 @@ import android.support.design.widget.*;
 import android.support.v7.app.*;
 import android.support.v7.widget.*;
 import android.view.*;
-
-import com.flurgle.blurkit.BlurKit;
+import android.widget.*;
+import com.flurgle.blurkit.*;
 import fjy.ins.*;
+import fjy.ins.model.*;
+import java.util.*;
+
+import android.support.v7.widget.Toolbar;
+import fjy.ins.R;
+import android.transition.*;
 
 public class HelpActivity extends AppCompatActivity {
 
@@ -37,11 +43,24 @@ public class HelpActivity extends AppCompatActivity {
         toolbar = $(R.id.toolbar_scroll);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+		DBManager dm = new DBManager(this); 
+		final List<Note> noteDataList = new ArrayList<>();
+		dm.readFromDB(noteDataList);
+		final ImageView iv= $(R.id.iv_help_bg);
+		new Handler().postDelayed(new Runnable(){
+				@Override
+				public void run()
+				{
+					App.glideWithBg(noteDataList, iv, HelpActivity.this);
+				}
+			}, 1000);
 		fab = $(R.id.fab_about);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-				Snackbar.make(toolbar, "action_阿里PayPal", 0).show();
+				ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+				cm.setText("2036293523@qq.com");
+				Sna("邮箱已复制到剪切板，若有问题，请联系");
             }
         });
 		if(Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT){
@@ -53,8 +72,13 @@ public class HelpActivity extends AppCompatActivity {
                                               .blur(((BitmapDrawable)
                                                     WallpaperManager.getInstance(this)
                                                     .getDrawable())
-                                                    .getBitmap(), 16)));
+                                                    .getBitmap(), 6)));
+		getWindow().setEnterTransition(new Explode().setDuration(500));
     }
+	
+	public static void intentHelp(Activity activity){
+		activity.startActivity(new Intent(activity, HelpActivity.class), ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+	}
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

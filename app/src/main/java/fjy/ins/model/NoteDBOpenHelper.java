@@ -12,8 +12,9 @@ public class NoteDBOpenHelper extends SQLiteOpenHelper {
     public static final String CONTENT = "content";
     public static final String TIME = "time";
     public static final String ID = "_id";
-	public static final String LOC = "location";
-	public static final String COLOR = "color";
+	public static final String PATH = "path";
+	public static final String SIZE = "size";
+	public static final String URL = "url";
 
     public NoteDBOpenHelper(Context context) {
         super(context, TABLE_NAME, null, VERSION);
@@ -26,8 +27,9 @@ public class NoteDBOpenHelper extends SQLiteOpenHelper {
                 + CONTENT + " TEXT NOT NULL,"
                 + TITLE + " TEXT NOT NULL,"
                 + TIME + " TEXT NOT NULL,"
-				+ COLOR + " TEXT NOT NULL,"
-			    + LOC + " TEXT NOT NULL)");
+				+ PATH + " TEXT NOT NULL,"
+			    + SIZE + " TEXT NOT NULL,"
+				+ URL  + " TEXT NOT NULL)");
     }
 
     @Override

@@ -9,16 +9,24 @@ import org.apache.http.*;
 import org.apache.http.client.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.*;
+import fjy.ins.model.*;
+import java.util.*;
 
 public class QuickActivity extends Activity
 {
 
+	private EditText et;
+	private List<Note> note = new ArrayList<>();
+	
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+		
+		DBManager dm = new DBManager(this);
+		dm.readFromDB(note);
         
-        final EditText et = new EditText(QuickActivity.this);
+        et = new EditText(QuickActivity.this);
         AlertDialog.Builder builder = new AlertDialog.Builder(QuickActivity.this);
         builder.setTitle("(๑•̀ㅁ•́๑)✧网址");
         builder.setView(et);
@@ -34,10 +42,10 @@ public class QuickActivity extends Activity
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String str = String.valueOf(et.getText());
-                    if(str != null && !str.equals("")){
+                    if(str != null && !str.equals("") && str.contains("instagram")){
                         new NetTask().execute(str);
                     }else{
-                        Toast.makeText(QuickActivity.this,"请输入网址('・ω・') \nThis element must not be null!", 0).show();
+                        Toast.makeText(QuickActivity.this,"请输入zhen que de网址('・ω・') \nThis element must not be wrong!", 0).show();
                     }
                 }
             });     
@@ -97,8 +105,33 @@ public class QuickActivity extends Activity
         protected void onPostExecute(String result) 
         {
             pd.dismiss();
-            startActivity(new Intent(QuickActivity.this , ImageActivity.class).putExtra("url", result));
-            finish();
+            if(result != null & result != ""){
+				String i = Praser.RegexString(result, "(?<=\"og.title\" content[=]\").*");
+				String sum = Praser.RegexString(i, "(?<=“).*");
+				String title = Praser.RegexString(i, ".*(?= Instagram)").replace(" on", "");
+				String image = Praser.RegexString(result, "(?<=\"og.image\" content[=]\").*(?=\")");
+				String video = Praser.RegexString(result, "(?<=\"og.video\" content[=]\").*(?=\")");
+
+				Info info = new Info();
+				info.setSum(sum);
+				info.setTitle(title);
+				if(video.equals("Nothing Found!")){
+					info.setImgUrl(image);
+					info.setType(0);
+				}else{
+					info.setImgUrl(image);
+					info.setVideoUrl(video);
+					info.setType(1);
+				}
+				if(App.isPhotoDownloaded(note, image)){
+					App.Sna(et,"这图貌似下载过(# ﾟДﾟ)");
+				}else{
+					ImageActivity.a(QuickActivity.this, info);
+					finish();
+				}
+			}else{
+				App.Sna(et, "Please make sure whether your network is disabled");
+			}
         }
     }
 }
