@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity
 			App.helpSna(tb, "貌似是第一次使用？\n是否查看使用帮助？", this);
         } else{
 			noteDataList.clear();
-			dm.readFromDB(noteDataList);
 		}
+		dm.readFromDB(noteDataList);
 		adapter = new MyAdapter(this, noteDataList);
 		adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener(){
 				@Override

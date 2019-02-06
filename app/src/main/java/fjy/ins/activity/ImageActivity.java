@@ -58,10 +58,6 @@ public class ImageActivity extends AppCompatActivity {
         return (T) super.findViewById(i);
     }
 	
-	public void Sna(String msg){
-		Snackbar.make(toolbar, msg, 0).show();
-	}
-	
 	public static void a(Activity ma, Info inf){
 		ma.startActivity(new Intent(ma, ImageActivity.class), ActivityOptions.makeSceneTransitionAnimation(ma).toBundle());
 		info = inf;
@@ -156,7 +152,7 @@ public class ImageActivity extends AppCompatActivity {
 	
 	private void loadOnlineImg(){
 		iv.setImageResource(R.drawable.ins_logo);
-		Sna("Loading.....\nPlease wait for serveral seconds....");
+		App.Sna(toolbar, "Loading.....\nPlease wait for serveral seconds....");
 		Glide.with(this).load(imgUrl).asBitmap().into(target);
 
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -167,17 +163,17 @@ public class ImageActivity extends AppCompatActivity {
 						case 0:
 							db.addToDB(title, sum, getTime(), PHOTO_NAME + PNG, size, imgUrl);
 							MainActivity.setChanged();
-							Sna("成功下载！已保存至图库");
+							App.Sna(toolbar, "成功下载！已保存至图库");
 							sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File("/sdcard/InstaSave/" + PHOTO_NAME))));
 							break;
 						case 1:
-							Sna("未找到文件！File not found!");
+							App.Sna(toolbar, "未找到文件！File not found!");
 							break;
 						case 2:
-							Sna("IO问题！请联系开发者\nIO Exception,Please contact me!");
+							App.Sna(toolbar, "IO问题！请联系开发者\nIO Exception,Please contact me!");
 							break;
 						case 4:
-							Sna("图片还未加载完成哦！请稍等");
+							App.Sna(toolbar, "图片还未加载完成哦！请稍等");
 					}
 				}
 			});
@@ -197,7 +193,7 @@ public class ImageActivity extends AppCompatActivity {
 				});
 			Glide.with(this).load(f).skipMemoryCache(true).into(iv);
 		}else{
-			Sna("图片不存在\n可能您已经删除了它ʕ•ٹ•ʔ");
+			App.Sna(toolbar, "图片不存在\n可能您已经删除了它ʕ•ٹ•ʔ");
 		}
 	}
 	
@@ -216,7 +212,7 @@ public class ImageActivity extends AppCompatActivity {
 				});
 			Glide.with(this).load(new File(SD + path)).skipMemoryCache(true).into(iv);
 		}else{
-			Sna("不存在\n可能您已经删除了它ʕ•ٹ•ʔ");
+			App.Sna(toolbar, "不存在\n可能您已经删除了它ʕ•ٹ•ʔ");
 		}
 	}
 	
@@ -234,13 +230,13 @@ public class ImageActivity extends AppCompatActivity {
 							sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File("/sdcard/InstaSave/" + PHOTO_NAME))));
 							break;
 						case 1:
-							Sna("未找到文件！File not found!");
+							App.Sna(toolbar, "未找到文件！File not found!");
 							break;
 						case 2:
-							Sna("IO问题！请联系开发者\nIO Exception,Please contact me!");
+							App.Sna(toolbar, "IO问题！请联系开发者\nIO Exception,Please contact me!");
 							break;
 						case 4:
-							Sna("图片还未加载完成哦！请稍等");
+							App.Sna(toolbar, "图片还未加载完成哦！请稍等");
 					}
 					final String imagePath = SD + PHOTO_NAME + MP4;
 					if(!new File(imagePath).exists()){
