@@ -77,6 +77,7 @@ public class ImageActivity extends AppCompatActivity {
     private SimpleTarget target = new SimpleTarget<Bitmap>() {  
         @Override
         public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+			
             iv.setImageBitmap(bitmap);
             bm = bitmap;
         }
@@ -151,8 +152,7 @@ public class ImageActivity extends AppCompatActivity {
 	}
 	
 	private void loadOnlineImg(){
-		iv.setImageResource(R.drawable.ins_logo);
-		App.Sna(toolbar, "Loading.....\nPlease wait for serveral seconds....");
+		
 		Glide.with(this).load(imgUrl).asBitmap().into(target);
 
 		fab.setOnClickListener(new View.OnClickListener() {

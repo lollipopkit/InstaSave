@@ -9,24 +9,23 @@
 	android:foreground="?attr/selectableItemBackgroundBorderless"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-    app:cardBackgroundColor="#08000000"
-	card_view:cardCornerRadius="6dp"
-	card_view:cardElevation="5dp"
+    app:cardBackgroundColor="#10000000"
+	android:background="#50000000"
+	card_view:cardCornerRadius="5dp"
 	card_view:cardUseCompatPadding="true"
-	card_view:contentPadding="5dp">
+	card_view:contentPadding="6dp">
 	
 	<RelativeLayout
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:id="@+id/card_layout"
 		android:orientation="horizontal"
-		android:layout_marginLeft="6dp"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
 		<ImageView
 			android:id="@+id/iv_card"
-			android:layout_marginTop="5dp"
+			android:layout_marginTop="3dp"
 			android:layout_width="80dp"
 			android:layout_height="110dp"/>
 

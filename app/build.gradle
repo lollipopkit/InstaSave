@@ -20,6 +20,9 @@ android {
 }
 
 dependencies {
+    compile 'com.youth.banner:banner:1.4.10'
+	compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
+	compile 'com.github.ybq:Android-SpinKit:1.2.0'
 	compile 'com.android.support:recyclerview-v7:25.1.0'
 	compile 'com.tencent.bugly:crashreport:+'
 	compile 'ren.qinc.edgetranslucent:lib:0.0.3'

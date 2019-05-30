@@ -29,11 +29,12 @@
 				app:edge_width="15dp"
 				app:edge_position="left|right">
 
-				<ImageView
+				<com.youth.banner.Banner
+					xmlns:app="http://schemas.android.com/apk/res-auto"
 					android:id="@+id/iv_main_bg"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
-					android:fitsSystemWindows="true" />
+					android:fitsSystemWindows="true"  />
 
 			</me.qinc.lib.edgetranslucent.EdgeTransparentView>
 

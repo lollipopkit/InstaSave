@@ -32,15 +32,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import com.bumptech.glide.*;
 import com.bumptech.glide.load.resource.bitmap.*;
 import android.widget.CompoundButton.*;
+import com.github.ybq.android.spinkit.style.*;
+import com.youth.banner.*;
 
 public class MainActivity extends AppCompatActivity
 {
 	private RecyclerView recyclerView;
+	private MultiplePulse fc = new MultiplePulse();
 	private DBManager dm;
 	private List<Note> noteDataList = new ArrayList<>();
     private MyAdapter adapter;
 	private FloatingActionButton fab;
-	private ImageView iv;
+	private Banner iv;
 	private Toolbar tb;
 	private long firstTime = 0;
 	public static boolean dataChanged = false;
@@ -172,9 +175,18 @@ public class MainActivity extends AppCompatActivity
     }
 	
 	private void initBg(){
-		App.glideWithBg(noteDataList, iv, MainActivity.this);
+		List<String> images = new ArrayList<>();
+		for(int i = noteDataList.size() - 1;i >= 0;i--){
+			images.add(noteDataList.size() - i - 1, "/sdcard/InstaSave/" + noteDataList.get(i).getPath());
+		}
+		iv.setImages(images)
+		  .setImageLoader(new GlideImageLoader())
+		  .setDelayTime(2000)
+		  .setBannerStyle(BannerConfig.NOT_INDICATOR)
+		  .start();
 	}
 	private void initFab(){
+		fab.setImageDrawable(fc);
 		fab.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -205,6 +217,7 @@ public class MainActivity extends AppCompatActivity
 	protected void onResume()
 	{
 		super.onResume();
+		fc.start();
 		if(dataChanged){
 			updateView();
 			initBg();

@@ -72,6 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         Glide.with(context)
             .load("/sdcard/InstaSave/" + not.getPath())
+			.thumbnail(0.1f)
 			.crossFade(600)
 			.transform(new CenterCrop(context), new GlideRoundTransform(context,8))
             .into(holder.iv);
