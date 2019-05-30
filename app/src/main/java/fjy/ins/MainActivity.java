@@ -38,7 +38,7 @@ import com.youth.banner.*;
 public class MainActivity extends AppCompatActivity
 {
 	private RecyclerView recyclerView;
-	private MultiplePulse fc = new MultiplePulse();
+	
 	private DBManager dm;
 	private List<Note> noteDataList = new ArrayList<>();
     private MyAdapter adapter;
@@ -181,12 +181,11 @@ public class MainActivity extends AppCompatActivity
 		}
 		iv.setImages(images)
 		  .setImageLoader(new GlideImageLoader())
-		  .setDelayTime(2000)
+		  .setDelayTime(3777)
 		  .setBannerStyle(BannerConfig.NOT_INDICATOR)
 		  .start();
 	}
 	private void initFab(){
-		fab.setImageDrawable(fc);
 		fab.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -217,7 +216,6 @@ public class MainActivity extends AppCompatActivity
 	protected void onResume()
 	{
 		super.onResume();
-		fc.start();
 		if(dataChanged){
 			updateView();
 			initBg();

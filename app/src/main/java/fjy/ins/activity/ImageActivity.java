@@ -28,11 +28,13 @@ import android.transition.*;
 import com.bumptech.glide.load.engine.*;
 import com.bumptech.glide.request.*;
 import java.util.concurrent.*;
+import com.github.ybq.android.spinkit.style.*;
 
 public class ImageActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 	private FloatingActionButton fab;
+	private MultiplePulse fc = new MultiplePulse();
 	private FadingTextView ftv;
     private ImageView iv;
     private Bitmap bm;
@@ -77,12 +79,13 @@ public class ImageActivity extends AppCompatActivity {
     private SimpleTarget target = new SimpleTarget<Bitmap>() {  
         @Override
         public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-			
+			ImageActivity.this.fc.stop();
+			ImageActivity.this.fab.setImageDrawable(getDrawable(R.drawable.ic_action_save));
             iv.setImageBitmap(bitmap);
             bm = bitmap;
         }
     };
-
+	
     private void initData(){
 		imgUrl = info.getImgUrl();
 		videoUrl = info.getVideoUrl();
@@ -155,6 +158,8 @@ public class ImageActivity extends AppCompatActivity {
 		
 		Glide.with(this).load(imgUrl).asBitmap().into(target);
 
+		fab.setImageDrawable(fc);
+		fc.start();
 		fab.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
