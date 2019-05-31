@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+	compile 'com.github.brnunes:swipeablerecyclerview:1.0.2'
     compile 'com.youth.banner:banner:1.4.10'
 	compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 	compile 'com.github.ybq:Android-SpinKit:1.2.0'

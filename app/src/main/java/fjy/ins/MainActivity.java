@@ -34,6 +34,7 @@ import com.bumptech.glide.load.resource.bitmap.*;
 import android.widget.CompoundButton.*;
 import com.github.ybq.android.spinkit.style.*;
 import com.youth.banner.*;
+import com.github.brnunes.swipeablerecyclerview.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity
 	private Toolbar tb;
 	private long firstTime = 0;
 	public static boolean dataChanged = false;
+	private boolean shouldDel = true;
 
 	public <T extends View> T $(int i){
         return (T) super.findViewById(i);
@@ -172,7 +174,68 @@ public class MainActivity extends AppCompatActivity
 				}
 			});
 		recyclerView.setAdapter(adapter);
+		SwipeableRecyclerViewTouchListener srvt = new SwipeableRecyclerViewTouchListener(recyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener(){
+
+				@Override
+				public boolean canSwipeLeft(int p1)
+				{
+					return false;
+				}
+
+				@Override
+				public boolean canSwipeRight(int p1)
+				{
+					return true;
+				}
+
+				@Override
+				public void onDismissedBySwipeLeft(RecyclerView p1, int[] p2)
+				{
+					App.Sna(tb, "Starred.");
+				}
+
+				@Override
+				public void onDismissedBySwipeRight(RecyclerView p1, final int[] p2)
+				{
+					final int i = p2[0];
+					final Note n = noteDataList.get(i);
+					Snackbar.make(tb, "你抛弃了一张可爱的照片.", Snackbar.LENGTH_SHORT)
+						.setAction("撤销", new View.OnClickListener(){
+							@Override
+							public void onClick(View p1)
+							{
+								shouldDel = false;
+								dataRec(i, n);
+							}
+						}).show();
+					for (int position : p2) {
+						noteDataList.remove(position);
+						adapter.notifyItemRemoved(position);
+					}
+					adapter.notifyDataSetChanged();
+					new Handler().postDelayed(new Runnable(){
+
+							@Override
+							public void run()
+							{
+								if(shouldDel){
+									final String nsme = "/sdcard/InstaSave/" + n.getPath();
+									DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
+									new File(nsme).delete();
+									new File(nsme.replace(".png", ".mp4")).delete();
+								}
+							}
+						}, 2000);
+				}
+			});
+		recyclerView.addOnItemTouchListener(srvt);
     }
+	
+	public void dataRec(int position, Note note){
+		noteDataList.add(position, note);
+		adapter.notifyItemInserted(position);
+		adapter.notifyDataSetChanged();
+	}
 	
 	private void initBg(){
 		List<String> images = new ArrayList<>();
