@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 	
 	private DBManager dm;
 	private List<Note> noteDataList = new ArrayList<>();
+	private Pulse db = new Pulse();
     private MyAdapter adapter;
 	private FloatingActionButton fab;
 	private Banner iv;
@@ -133,46 +134,6 @@ public class MainActivity extends AppCompatActivity
 					}
 				}
 			});
-		adapter.setOnItemLongClickListener(new MyAdapter.OnItemLongClickListener(){
-
-				@Override
-				public void onItemLongClick(View view, final int position)
-				{
-					final Note note = adapter.getItem(position);
-					if (note != null) {
-						final int id = note.getId();
-						final String nsme = "/sdcard/InstaSave/" + note.getPath();
-						AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-						builder.setTitle("(๑•̀ㅁ•́๑)✧");
-						builder.setMessage("\n要删除什么？");
-						builder.setPositiveButton("记录+文件", new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									DBManager.getInstance(MainActivity.this).deleteNote(id);
-									new File(nsme).delete();
-									new File(nsme.replace(".png", ".mp4")).delete();
-									adapter.removeItem(position);
-									initBg();
-								}
-							})
-							.setNegativeButton("记录", new DialogInterface.OnClickListener(){
-
-								@Override
-								public void onClick(DialogInterface p1, int p2)
-								{
-									DBManager.getInstance(MainActivity.this).deleteNote(id);
-									adapter.removeItem(position);
-									initBg();
-								}
-							})
-							.setNeutralButton("取消", new DialogInterface.OnClickListener(){
-								@Override
-								public void onClick(DialogInterface p1, int p2){}
-							});		
-						builder.create().show();
-					}
-				}
-			});
 		recyclerView.setAdapter(adapter);
 		SwipeableRecyclerViewTouchListener srvt = new SwipeableRecyclerViewTouchListener(recyclerView, new SwipeableRecyclerViewTouchListener.SwipeListener(){
 
@@ -249,6 +210,8 @@ public class MainActivity extends AppCompatActivity
 		  .start();
 	}
 	private void initFab(){
+		db.start();
+		fab.setImageDrawable(db);
 		fab.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {

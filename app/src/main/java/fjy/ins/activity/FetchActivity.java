@@ -27,6 +27,7 @@ import android.graphics.*;
 import android.transition.*;
 import android.view.inputmethod.*;
 import android.view.View.*;
+import com.github.ybq.android.spinkit.style.*;
 
 public class FetchActivity extends AppCompatActivity {
 
@@ -173,15 +174,13 @@ public class FetchActivity extends AppCompatActivity {
 	
 	private class NetTask extends AsyncTask<String, Integer, String> 
     {
-        ProgressDialog pd = new ProgressDialog(FetchActivity.this);
+        
         @Override
         protected void onPreExecute()
         {
-            pd.setTitle(getString(R.string.pd_title));
-            pd.setMessage(getString(R.string.pd_msg));
-            pd.setIndeterminate(true);
-            pd.setCancelable(false);
-            pd.show();
+            MultiplePulse mp = new MultiplePulse();
+			fab.setImageDrawable(mp);
+			mp.start();
         }
 
         @Override
@@ -217,13 +216,12 @@ public class FetchActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... progresses) 
         {
-            pd.setMessage(getString(R.string.pd_msg) + getString(R.string.pd_pro) + progresses[0] + "%");
+			fab.setAlpha(100 - progresses[0]);
         }
 
         @Override
         protected void onPostExecute(String result) 
         {
-            pd.dismiss();
 			if(result != null & result != ""){
 				String i = Praser.RegexString(result, "(?<=\"og.title\" content[=]\").*");
 				String sum = Praser.RegexString(i, "(?<=“).*");
