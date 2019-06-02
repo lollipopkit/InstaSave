@@ -134,7 +134,7 @@ public class FetchActivity extends AppCompatActivity {
 			String clipStr = item.getText().toString();
 			if(clipStr.contains("instagram")){
 				et.setText(item.getText());
-				Toast.makeText(this, "已自动复制内容至输入框", 0).show();
+				App.Sna(toolbar, "已自动复制内容至输入框");
 			}
 			
 		} catch (Exception e) {
@@ -240,7 +240,7 @@ public class FetchActivity extends AppCompatActivity {
 					info.setVideoUrl(video);
 					info.setType(1);
 				}
-				if(App.isPhotoDownloaded(noteDataList, image)){
+				if(App.isPhotoDownloaded(noteDataList, image) && !image.equals("Nothing Found!")){
 					App.Sna(toolbar, "这图貌似下载过(# ﾟДﾟ)");
 				}else{
 					ImageActivity.a(FetchActivity.this, info);

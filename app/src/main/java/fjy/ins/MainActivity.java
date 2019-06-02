@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 	
 	private DBManager dm;
 	private List<Note> noteDataList = new ArrayList<>();
-	private Pulse db = new Pulse();
+	private MultiplePulse db = new MultiplePulse();
     private MyAdapter adapter;
 	private FloatingActionButton fab;
 	private Banner iv;
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity
 				@Override
 				public boolean canSwipeLeft(int p1)
 				{
-					return false;
+					return true;
 				}
 
 				@Override
@@ -151,12 +151,6 @@ public class MainActivity extends AppCompatActivity
 
 				@Override
 				public void onDismissedBySwipeLeft(RecyclerView p1, int[] p2)
-				{
-					App.Sna(tb, "Starred.");
-				}
-
-				@Override
-				public void onDismissedBySwipeRight(RecyclerView p1, final int[] p2)
 				{
 					final int i = p2[0];
 					final Note n = noteDataList.get(i);
@@ -184,6 +178,39 @@ public class MainActivity extends AppCompatActivity
 									DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
 									new File(nsme).delete();
 									new File(nsme.replace(".png", ".mp4")).delete();
+									initBg();
+								}
+							}
+						}, 2000);
+				}
+
+				@Override
+				public void onDismissedBySwipeRight(RecyclerView p1, final int[] p2)
+				{
+					final int i = p2[0];
+					final Note n = noteDataList.get(i);
+					Snackbar.make(tb, "你抛弃了一条珍贵的记录.", Snackbar.LENGTH_SHORT)
+						.setAction("撤销", new View.OnClickListener(){
+							@Override
+							public void onClick(View p1)
+							{
+								shouldDel = false;
+								dataRec(i, n);
+							}
+						}).show();
+					for (int position : p2) {
+						noteDataList.remove(position);
+						adapter.notifyItemRemoved(position);
+					}
+					adapter.notifyDataSetChanged();
+					new Handler().postDelayed(new Runnable(){
+
+							@Override
+							public void run()
+							{
+								if(shouldDel){
+									DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
+									initBg();
 								}
 							}
 						}, 2000);
@@ -192,7 +219,7 @@ public class MainActivity extends AppCompatActivity
 		recyclerView.addOnItemTouchListener(srvt);
     }
 	
-	public void dataRec(int position, Note note){
+	private void dataRec(int position, Note note){
 		noteDataList.add(position, note);
 		adapter.notifyItemInserted(position);
 		adapter.notifyDataSetChanged();
@@ -205,7 +232,7 @@ public class MainActivity extends AppCompatActivity
 		}
 		iv.setImages(images)
 		  .setImageLoader(new GlideImageLoader())
-		  .setDelayTime(3777)
+		  .setDelayTime(2000)
 		  .setBannerStyle(BannerConfig.NOT_INDICATOR)
 		  .start();
 	}
@@ -242,10 +269,18 @@ public class MainActivity extends AppCompatActivity
 	protected void onResume()
 	{
 		super.onResume();
+		db.start();
 		if(dataChanged){
 			updateView();
 			initBg();
 		}
+	}
+
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+		db.stop();
 	}
 
 
