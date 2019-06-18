@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity
 		if(dataChanged){
 			updateView();
 			initBg();
+			dataChanged = false;
 		}
 	}
 

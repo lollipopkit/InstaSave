@@ -222,7 +222,7 @@ public class ImageActivity extends AppCompatActivity {
 	}
 	
 	private void loadOnlineVideo(){			
-		Glide.with(this).load(imgUrl).crossFade(500).into(target);
+		Glide.with(this).load(imgUrl).asBitmap().into(target);
 		
 		fab.setOnClickListener(new View.OnClickListener(){
 				@Override
@@ -245,6 +245,7 @@ public class ImageActivity extends AppCompatActivity {
 					}
 					final String imagePath = SD + PHOTO_NAME + MP4;
 					if(!new File(imagePath).exists()){
+						fab.setImageDrawable(fc);
 						new Thread(new Runnable() {
 								@Override
 								public void run() {
@@ -254,8 +255,14 @@ public class ImageActivity extends AppCompatActivity {
 								}
 							}).start();
 						while(!isAlive){
-							sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).setData(Uri.fromFile(new File(imagePath))));
-							intendActivity();
+							fab.setImageResource(R.drawable.ic_about);
+							fab.setOnClickListener(new View.OnClickListener(){
+									@Override
+									public void onClick(View p1)
+									{
+										intendActivity();
+									}
+								});
 						}
 					}else{
 						intendActivity();
@@ -266,6 +273,7 @@ public class ImageActivity extends AppCompatActivity {
 	
 	private void intendActivity(){
 		info.setPath(SD + PHOTO_NAME + MP4);
+		Toast.makeText(this, SD + PHOTO_NAME + MP4, 0).show();
 		VideoActivity.a(ImageActivity.this, info);
 	}
 	
