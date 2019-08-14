@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity
 	private void dataRec(int position, Note note){
 		noteDataList.add(position, note);
 		adapter.notifyItemInserted(position);
-		adapter.notifyDataSetChanged();
+		//adapter.notifyDataSetChanged();
 	}
 	
 	private void initBg(){
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity
 		}
 		iv.setImages(images)
 		  .setImageLoader(new GlideImageLoader())
-		  .setDelayTime(2000)
+		  .setDelayTime(3000)
 		  .setBannerStyle(BannerConfig.NOT_INDICATOR)
 		  .start();
 	}
@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onResume();
 		db.start();
+		iv.startAutoPlay();
 		if(dataChanged){
 			updateView();
 			initBg();
@@ -282,6 +283,7 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onStop();
 		db.stop();
+		iv.stopAutoPlay();
 	}
 
 
