@@ -94,7 +94,7 @@ public class ImageActivity extends AppCompatActivity {
 		sum = info.getSum();
 		type = info.getType();
 		SD = Environment.getExternalStorageDirectory() + "/InstaSave/";
-		PHOTO_NAME = title.replaceAll(" ", "-") + "-" + getSimpleTime();
+		PHOTO_NAME = title.replaceAll(" ", "-") + "-" + getSimpleTime() + "-" + (int)Math.random()*100;
 		
 		db = new DBManager(this);
     }
@@ -187,7 +187,7 @@ public class ImageActivity extends AppCompatActivity {
 	private void loadLocalImg(){
 		f = new File(SD + path);
 		if(f.exists()){
-			fab.setImageDrawable(getDrawable(R.drawable.ic_share));
+			fab.setImageResource(R.drawable.ic_share);
 			fab.setOnClickListener(new View.OnClickListener(){
 					@Override
 					public void onClick(View v){
@@ -205,7 +205,7 @@ public class ImageActivity extends AppCompatActivity {
 	private void loadLocalVideo(){
 		f = new File(SD + path.replace(PNG, MP4));
 		if(f.exists()){
-			fab.setImageDrawable(getDrawable(R.drawable.ic_share));
+			fab.setImageResource(R.drawable.ic_play);
 			fab.setOnClickListener(new View.OnClickListener(){
 					@Override
 					public void onClick(View v){
@@ -223,7 +223,7 @@ public class ImageActivity extends AppCompatActivity {
 	
 	private void loadOnlineVideo(){			
 		Glide.with(this).load(imgUrl).asBitmap().into(target);
-		
+		App.Sna(toolbar, "这是一条视频\n正在加载视频预览图....");
 		fab.setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View p1)
@@ -256,7 +256,7 @@ public class ImageActivity extends AppCompatActivity {
 								}
 							}).start();
 						while(!isAlive){
-							fab.setImageResource(R.drawable.ic_about);
+							fab.setImageResource(R.drawable.ic_play);
 							fab.setOnClickListener(new View.OnClickListener(){
 									@Override
 									public void onClick(View p1)
@@ -274,7 +274,6 @@ public class ImageActivity extends AppCompatActivity {
 	
 	private void intendActivity(){
 		info.setPath(SD + PHOTO_NAME + MP4);
-		Toast.makeText(this, SD + PHOTO_NAME + MP4, 0).show();
 		VideoActivity.a(ImageActivity.this, info);
 	}
 	

@@ -35,10 +35,6 @@ public class VideoActivity extends AppCompatActivity
         return (T) super.findViewById(i);
     }
 
-	public void Sna(String msg){
-		Snackbar.make(vv, msg, 0).show();
-	}
-
 	public static void a(ImageActivity ia, Info in){
 		ia.startActivity(new Intent(ia, VideoActivity.class));
 		info = in;
@@ -93,14 +89,13 @@ public class VideoActivity extends AppCompatActivity
 		vv.setMediaController(mc);
 		vv.seekTo(0);
 		vv.requestFocus();
-		Sna("Loading video.....\nPlease wait.....");
 		new Handler().postDelayed(new Runnable(){
 				@Override
 				public void run()
 				{
 					vv.start();
 				}
-			}, 500);
+			}, 300);
 	}
 	
 	private void initListener(){

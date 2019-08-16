@@ -15,6 +15,7 @@ import fjy.ins.model.*;
 import java.io.*;
 import java.nio.*;
 import java.util.*;
+import android.net.*;
 
 public class App extends Application 
 { 
@@ -50,7 +51,9 @@ public class App extends Application
 			.setAction("帮助", new View.OnClickListener(){
 				@Override
 				public void onClick(View v1){
-					HelpActivity.intentHelp(ac);
+					Uri uri = Uri.parse("https://lollipopkit.github.io/2019/08/16/post-instasavehelp/");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					ac.startActivity(intent);
 				}
 			}).show();
 	}

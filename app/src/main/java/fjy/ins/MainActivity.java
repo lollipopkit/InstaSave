@@ -106,16 +106,18 @@ public class MainActivity extends AppCompatActivity
 						initBg();
 					}
 				}, 800);
+		}else{
+			new Handler().postDelayed(new Runnable(){
+					@Override
+					public void run()
+					{
+						App.helpSna(tb, "貌似是第一次使用？\n是否查看使用帮助？",MainActivity.this);
+					}
+				}, 800);
 		}
     }
 
 	private void updateView() {
-        if (noteDataList.isEmpty()) {
-			App.helpSna(tb, "貌似是第一次使用？\n是否查看使用帮助？", this);
-        } else{
-			noteDataList.clear();
-		}
-		dm.readFromDB(noteDataList);
 		adapter = new MyAdapter(this, noteDataList);
 		adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener(){
 				@Override
@@ -169,19 +171,13 @@ public class MainActivity extends AppCompatActivity
 						noteDataList.remove(position);
 						adapter.notifyItemRemoved(position);
 					}
-					adapter.notifyDataSetChanged();
+					//adapter.notifyDataSetChanged();
 					new Handler().postDelayed(new Runnable(){
 
 							@Override
 							public void run()
 							{
-								if(shouldDel){
-									final String nsme = "/sdcard/InstaSave/" + n.getPath();
-									DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
-									new File(nsme).delete();
-									new File(nsme.replace(".png", ".mp4")).delete();
-									initBg();
-								}
+								dataDel(n, true);
 							}
 						}, 2000);
 				}
@@ -204,16 +200,13 @@ public class MainActivity extends AppCompatActivity
 						noteDataList.remove(position);
 						adapter.notifyItemRemoved(position);
 					}
-					adapter.notifyDataSetChanged();
+					//adapter.notifyDataSetChanged();
 					new Handler().postDelayed(new Runnable(){
 
 							@Override
 							public void run()
 							{
-								if(shouldDel){
-									DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
-									initBg();
-								}
+								dataDel(n, false);
 							}
 						}, 2000);
 				}
@@ -227,6 +220,21 @@ public class MainActivity extends AppCompatActivity
 		//adapter.notifyDataSetChanged();
 	}
 	
+	private void dataDel(Note n, boolean dataShouldDel){
+		if(shouldDel){
+			if(dataShouldDel){
+				final String nsme = "/sdcard/InstaSave/" + n.getPath();
+				new File(nsme).delete();
+				new File(nsme.replace(".png", ".mp4")).delete();
+			}
+			DBManager.getInstance(MainActivity.this).deleteNote(n.getId());
+			noteDataList.clear();
+			dm.readFromDB(noteDataList);
+			initBg();
+			shouldDel = true;
+		}
+	}
+	
 	private void initBg(){
 		List<String> images = new ArrayList<>();
 		for(int i = noteDataList.size() - 1;i >= 0;i--){
@@ -238,6 +246,7 @@ public class MainActivity extends AppCompatActivity
 		  .setBannerStyle(BannerConfig.NOT_INDICATOR)
 		  .start();
 	}
+	
 	private void initFab(){
 		db.start();
 		fab.setImageDrawable(db);
@@ -274,6 +283,8 @@ public class MainActivity extends AppCompatActivity
 		db.start();
 		iv.startAutoPlay();
 		if(dataChanged){
+			noteDataList.clear();
+			dm.readFromDB(noteDataList);
 			updateView();
 			initBg();
 			dataChanged = false;
