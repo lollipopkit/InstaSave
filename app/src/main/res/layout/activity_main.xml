@@ -22,15 +22,22 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 			
-			<com.youth.banner.Banner
-				xmlns:app="http://schemas.android.com/apk/res-auto"
-				android:id="@+id/iv_main_bg"
+			<me.qinc.lib.edgetranslucent.EdgeTransparentView
 				android:layout_width="match_parent"
-				android:layout_marginLeft="7dp"
-				android:layout_marginRight="7dp"
-				android:layout_height="match_parent"
-				android:fitsSystemWindows="true"  />
+				android:layout_height="wrap_content"
+				android:fitsSystemWindows="true"
+				app:edge_width="15dp"
+				app:edge_position="left|right">
 
+				<com.youth.banner.Banner
+					xmlns:app="http://schemas.android.com/apk/res-auto"
+					android:id="@+id/iv_main_bg"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:fitsSystemWindows="true"  />
+				
+			</me.qinc.lib.edgetranslucent.EdgeTransparentView>
+			
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

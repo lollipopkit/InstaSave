@@ -251,7 +251,8 @@ public class ImageActivity extends AppCompatActivity {
 								public void run() {
 									isAlive = true;
 									String path =  getVideoPath(videoUrl);
-									copyFile(path, imagePath);	
+									copyFile(path, imagePath);
+									isAlive = false;
 								}
 							}).start();
 						while(!isAlive){
@@ -307,7 +308,7 @@ public class ImageActivity extends AppCompatActivity {
                     fs.write(buffer, 0, byteread);
                 }
                 inStream.close();
-				isAlive = false;
+				//isAlive = false;
             }
         }
         catch (Exception e) {

@@ -98,13 +98,15 @@ public class MainActivity extends AppCompatActivity
                                                     .getDrawable())
                                                     .getBitmap(), 6)));
 		getWindow().setEnterTransition(new Slide().setDuration(500));
-		new Handler().postDelayed(new Runnable(){
-				@Override
-				public void run()
-				{
-					initBg();
-				}
-			}, 800);
+		if(!noteDataList.isEmpty()){
+			new Handler().postDelayed(new Runnable(){
+					@Override
+					public void run()
+					{
+						initBg();
+					}
+				}, 800);
+		}
     }
 
 	private void updateView() {
